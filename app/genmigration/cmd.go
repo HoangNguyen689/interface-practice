@@ -20,7 +20,7 @@ type command struct {
 }
 
 func NewCommand() *cobra.Command {
-	a := &command{
+	c := &command{
 		migrationDir: "schema",
 		gracePeriod:  30 * time.Second,
 	}
@@ -29,7 +29,7 @@ func NewCommand() *cobra.Command {
 		Use:   "gen-migration",
 		Short: "Generate migration file.",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := a.run(); err != nil {
+			if err := c.run(); err != nil {
 				return err
 			}
 
@@ -37,7 +37,7 @@ func NewCommand() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&a.name, "name", "n", a.name, "The name of migration file.")
+	cmd.Flags().StringVarP(&c.name, "name", "n", c.name, "The name of migration file.")
 	if err := cmd.MarkFlagRequired("name"); err != nil {
 		log.Fatal(err)
 	}

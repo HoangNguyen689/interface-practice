@@ -6,3 +6,13 @@ services:
       - "6379:6379"
     command: ["redis-server"]
     restart: always
+
+  postgres:
+    image: postgres:16.4
+    restart: always
+    ports:
+      - "5432:5432"
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db

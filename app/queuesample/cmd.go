@@ -20,16 +20,16 @@ const (
 	redisQueueName    = "test-redis-queue"
 )
 
-type queuesample struct{}
+type command struct{}
 
 func NewCommand() *cobra.Command {
-	q := &queuesample{}
+	c := &command{}
 
 	cmd := &cobra.Command{
 		Use:   "queue-sample",
 		Short: "Test queue",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := q.run(); err != nil {
+			if err := c.run(); err != nil {
 				return err
 			}
 
@@ -40,7 +40,7 @@ func NewCommand() *cobra.Command {
 	return cmd
 }
 
-func (q *queuesample) run() error {
+func (c *command) run() error {
 	var ctx = context.Background()
 
 	if err := testStandardQueue(ctx); err != nil {

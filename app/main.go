@@ -7,6 +7,7 @@ import (
 
 	"github.com/HoangNguyen689/interface-practice/app/genmigration"
 	"github.com/HoangNguyen689/interface-practice/app/queuesample"
+	"github.com/HoangNguyen689/interface-practice/app/runmigration"
 )
 
 func main() {
@@ -19,6 +20,7 @@ func main() {
 	cmds := []*cobra.Command{
 		queuesample.NewCommand(),
 		genmigration.NewCommand(),
+		runmigration.NewCommand(),
 	}
 
 	for _, cmd := range cmds {
