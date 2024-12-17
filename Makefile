@@ -10,6 +10,11 @@ build/server: ## Build the server
 run/queue-sample: ## Run the queue sample
 	go run app/main.go queue-sample
 
+.PHONY: run/gen-migration
+run/gen-migration: ## generate new migration up/down files ## make run/gen-migration n=create_user_table
+run/gen-migration:
+	go run ./app/main.go gen-migration -n $(n)
+
 .PHONY: help
 help: ## Display this help screen ## make or make help
 	@echo ""
