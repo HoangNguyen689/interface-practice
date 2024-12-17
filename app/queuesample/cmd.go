@@ -1,4 +1,4 @@
-package main
+package queuesample
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/spf13/cobra"
 
 	"github.com/HoangNguyen689/interface-practice/pkg/queue"
 	"github.com/HoangNguyen689/interface-practice/pkg/queue/queueredis"
@@ -19,7 +20,27 @@ const (
 	redisQueueName    = "test-redis-queue"
 )
 
-func main() {
+type queuesample struct{}
+
+func NewCommand() *cobra.Command {
+	q := &queuesample{}
+
+	cmd := &cobra.Command{
+		Use:   "queue-sample",
+		Short: "Test queue",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := q.run(); err != nil {
+				return err
+			}
+
+			return nil
+		},
+	}
+
+	return cmd
+}
+
+func (q *queuesample) run() error {
 	var ctx = context.Background()
 
 	if err := testStandardQueue(ctx); err != nil {
@@ -34,6 +55,7 @@ func main() {
 		panic(err)
 	}
 
+	return nil
 }
 
 func testStandardQueue(ctx context.Context) error {
