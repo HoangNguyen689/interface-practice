@@ -3,8 +3,13 @@
 ##### BUILD #####
 
 .PHONY: build/server
-build/server: ## Build the server
-	go build -o .artifacts/server ./app
+build/server: BUILD_VERSION ?= $(shell git rev-parse HEAD)
+build/server: BUILD_COMMIT ?= $(shell git rev-parse HEAD)
+build/server: BUILD_DATE ?= $(shell date -u '+%Y%m%d-%H%M%S')
+build/server: BUILD_LDFLAGS_PREFIX := -X github.com/HoangNguyen689/interface-practice/pkg/version
+build/server: BUILD_OPTS ?= -ldflags "$(BUILD_LDFLAGS_PREFIX).version=$(BUILD_VERSION) $(BUILD_LDFLAGS_PREFIX).gitCommit=$(BUILD_COMMIT) $(BUILD_LDFLAGS_PREFIX).buildDate=$(BUILD_DATE) -w"
+build/server: ## build server ## make build/server
+	go build $(BUILD_OPTS) -o .artifacts/server ./app
 
 .PHONY: run/queue-sample
 run/queue-sample: ## Run the queue sample
